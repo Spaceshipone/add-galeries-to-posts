@@ -1,0 +1,24 @@
+.px100 {
+	height: 105px;
+}
+
+.px150 {
+	height: 160px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+.px200 {
+	height: 210px;
+	margin-left: 25px;
+	margin-bottom: 25px;
+
+}
+
+.px200 img {
+	border: 1px solid rgb(125, 125, 125);
+}
+
+.px150 img {
+	border: 1px solid rgb(125, 125, 125);
+}
