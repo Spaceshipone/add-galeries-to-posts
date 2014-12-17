@@ -33,6 +33,11 @@ defined('ABSPATH') or die("No script kiddies please!");
 
 
 
+include ("fonctions-photos.php");
+
+
+
+
 function register_my_galerie_menu_page()
 	{
 	    add_menu_page( 'galerie title', 'galerie', 'manage_options','hello', 'my_galerie_menu_page',  plugin_dir_url( __FILE__ )."images/camera.jpg", 101 );
