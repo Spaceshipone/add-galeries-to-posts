@@ -49,3 +49,6 @@ $args = array(
  
  
  Ajoute les tailles d' image suivantes: "100px" , "150px", "200px", "225px", "250px", "300px". Attention, ces tailles n' apparaîtront qu' après l' actiaion du plugin. Il vous faudra donc utiliser un plugin comme force regeneration thumbnails pour les créer.
+ 
+ 
+ Ne pas oublier d' ajouter des attachments au post ou la page, sinon cela ne fonctionne pas, puisque sa première préoccupation est de les chercher
