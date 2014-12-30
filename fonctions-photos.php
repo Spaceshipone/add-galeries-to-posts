@@ -132,9 +132,6 @@ function attachment_by_id($attachment_id, $taille_imagette)
 
 	$href  =  $datas_image[0];
 
-	/* ici on teste le rapport largeur/hauteur et on décide de de la taille d' imagette à utiliser */
-
-
 	$datas_imagette = wp_get_attachment_image_src( $attachment_id, $taille_imagette);
 
 	if($datas_imagette )
@@ -145,6 +142,7 @@ function attachment_by_id($attachment_id, $taille_imagette)
 			$width = $datas_imagette[1];
 
 			if ( ($height < $width) )    // la mesure de base est la hauteur de la photo
+			/* ici on teste le rapport largeur/hauteur et on décide de de la taille d' imagette à utiliser */
 				{
 					switch ($taille_imagette)
 						{
@@ -177,7 +175,7 @@ function attachment_by_id($attachment_id, $taille_imagette)
 
 		$href = $datas_image[0];
 
-		$alt_text = "";
+		$alt_text = get_post($attachment_id ) -> post_content;
 
 		$attachment_datas = array(
 													"height" => $height,
@@ -222,6 +220,7 @@ function galerie_perso($args = array("post_id", "nbre_img", "taille_imagette", "
 
 						$attachment_datas = attachment_by_id($attachment_id, $taille_imagette);
 
+
 						extract($attachment_datas);
 
 						if (isset($permalink))
@@ -234,7 +233,7 @@ function galerie_perso($args = array("post_id", "nbre_img", "taille_imagette", "
 						 						"href" =>$href,
 						 						"height" => $height,
 						 						"width" => $width,
-						 						"alt_text" =>"",
+						 						"alt_text" =>$alt_text,
 						 						"pop_up" => $pop_up,
 						 						"taille_imagette" => $taille_imagette,
 						 						);
@@ -282,16 +281,26 @@ function html( $args = array("scr", "href", "height", "width", "alt_text", "pop_
 
 		}			// end swtch
 
-	?>
-		<a class = "<?php echo $pop_up ?>  thumbnail <?php echo $classe_taille_imagette ?>"  href="<?php echo $href ?>" rel =  "<?php echo $pop_up ?>"    >
 
+	if ( !is_admin())
+	{
+		?>
+			<a class = "<?php echo $pop_up ?>  thumbnail <?php echo $classe_taille_imagette ?>"  href="<?php echo $href ?>" rel =  "<?php echo $pop_up ?>"    >
+
+				<img class="galerie" src='<?php echo $scr ;?>' alt=" <?php echo $alt_text  ?>"  height="<?php echo $height; ?>" width="<?php echo $width ; ?>"  >
+
+			</a>
+	<?php
+	}
+	else
+		{
+			?>
 			<img class="galerie" src='<?php echo $scr ;?>' alt=" <?php echo $alt_text  ?>"  height="<?php echo $height; ?>" width="<?php echo $width ; ?>"  >
+			<?php
+		}
 
-		</a>
-<?php
 
-
-}
+} // fin de fonction
 
 
 
