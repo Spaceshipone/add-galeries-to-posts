@@ -83,13 +83,16 @@ add_action( 'wp_enqueue_scripts', 'add_styles' );
 
 
 
+
 function add_styles_to_admin()
 {
-	wp_register_style('add-galeries-to-posts',   plugin_dir_url( __FILE__ )."css/admin.css" );
+	wp_register_style('add-galeries-to-admin-posts',   plugin_dir_url( __FILE__ )."css/admin.css" );
 
-	wp_enqueue_style('add-galeries-to-posts');
+	wp_enqueue_style('add-galeries-to-admin-posts');
 }
-add_action('admin_print_styles', 'add-style-to-admin' );
+add_action('admin_print_styles', 'add_styles_to_admin' );
+
+
 
 
 

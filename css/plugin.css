@@ -12,21 +12,17 @@
 	height: 210px;
 	margin-left: 25px;
 	margin-bottom: 25px;
-
 }
 
+
+
+
+
+.px150 img,
+.px100 img,
+.px225 img,
 .px200 img {
 	border: 1px solid rgb(125, 125, 125);
-}
-
-.px150 img {
-	border: 1px solid rgb(125, 125, 125);
-}
-
-
-#galerie {
-	width: 100%;
-	float: left;
 }
 
 
