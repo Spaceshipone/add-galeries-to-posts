@@ -34,6 +34,7 @@ defined('ABSPATH') or die("No script kiddies please!");
 
 
 include ("fonctions-photos.php");
+include ("photos-metabox.php");
 
 
 
@@ -69,29 +70,11 @@ add_action( 'after_setup_theme', 'images_setup' );
 
 
 
-
-
-
-function enqueue_and_register_my_jquery()
-	{
-
-
-	    wp_register_script( 'resize-link-box', plugin_dir_url( __FILE__ ) . "jquery/resize-link-box.js" );
-
-	   wp_enqueue_script( 'resize-link-box', plugin_dir_url( __FILE__ ) . "jquery/resize-link-box.js", "jquery" );
-
-}
-
-add_action( 'wp_enqueue_scripts', 'enqueue_and_register_my_jquery' );
-
-
-
-
 function add_styles()
 {
-	wp_register_style( 'AAAAAgaleries',   plugin_dir_url( __FILE__ )."css/plugin.css" );
+	wp_register_style( 'add-galeries-to-posts',   plugin_dir_url( __FILE__ )."css/plugin.css" );
 
-	wp_enqueue_style( 'AAAAAgaleries' );
+	wp_enqueue_style( 'add-galeries-to-posts' );
 
 }
 add_action( 'wp_enqueue_scripts', 'add_styles' );
@@ -101,17 +84,70 @@ add_action( 'wp_enqueue_scripts', 'add_styles' );
 
 
 
+function add_styles_to_admin()
+{
+	wp_register_style('add-galeries-to-admin-posts',   plugin_dir_url( __FILE__ )."css/admin.css" );
+
+	wp_enqueue_style('add-galeries-to-admin-posts');
+}
+add_action('admin_print_styles', 'add_styles_to_admin' );
 
 
 
 
 
+/* shortcode pour l' usage du plugin */
+
+
+function oLgallery_shortcode($atts, $content = null )
+{
+	global $post;
+
+	$atts = shortcode_atts( array (
+														"post_id" =>	 $post-> ID,
+														"nbre_img" =>	0,
+														 "taille_imagette" =>	"150px",
+														 "pop_up" => "pop-up",
+													),
+											$atts
+										);
+
+	ob_start();	?>
+	 <section id = "galerie">
+	 	<?php galerie_perso($atts );	?>
+	 </section>
+	<?php
+	return ob_get_clean();
+}
+
+add_shortcode("olgallery",  "oLgallery_shortcode");
 
 
 
 
+function oLhtml_shortcode($atts, $content = null )
+{
+	global $post;
 
 
+	$atts = shortcode_atts( array (
+													"scr" => "",
+													"href"	=> "",
+													"height"	=> "",
+													"width"	=> "",
+													"alt_text"	=> "",
+													"pop_up"	=> "",
+													"taille_imagette" =>"150px"
+												),
+											$atts
+										);
+
+	ob_start();
+	html( $atts);
+	return ob_get_clean();
+}
+
+add_shortcode("olhtml",  "oLhtml_shortcode");
 
 
 

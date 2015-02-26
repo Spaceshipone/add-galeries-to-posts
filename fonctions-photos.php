@@ -132,9 +132,6 @@ function attachment_by_id($attachment_id, $taille_imagette)
 
 	$href  =  $datas_image[0];
 
-	/* ici on teste le rapport largeur/hauteur et on décide de de la taille d' imagette à utiliser */
-
-
 	$datas_imagette = wp_get_attachment_image_src( $attachment_id, $taille_imagette);
 
 	if($datas_imagette )
@@ -145,6 +142,7 @@ function attachment_by_id($attachment_id, $taille_imagette)
 			$width = $datas_imagette[1];
 
 			if ( ($height < $width) )    // la mesure de base est la hauteur de la photo
+			/* ici on teste le rapport largeur/hauteur et on décide de de la taille d' imagette à utiliser */
 				{
 					switch ($taille_imagette)
 						{
@@ -177,7 +175,7 @@ function attachment_by_id($attachment_id, $taille_imagette)
 
 		$href = $datas_image[0];
 
-		$alt_text = "";
+		$alt_text = get_post($attachment_id ) -> post_content;
 
 		$attachment_datas = array(
 													"height" => $height,
@@ -203,7 +201,7 @@ function galerie_perso($args = array("post_id", "nbre_img", "taille_imagette", "
 		extract($args);
 
 		if ( !isset($nbre_img) ) { $nbre_img = 0; };
-		if ( !isset($taille_imagette) ) { $taille_imagette = 150; };
+		if ( !isset($taille_imagette) ) { $taille_imagette = '150px'; };
 
 
 		$args = array (
@@ -222,6 +220,7 @@ function galerie_perso($args = array("post_id", "nbre_img", "taille_imagette", "
 
 						$attachment_datas = attachment_by_id($attachment_id, $taille_imagette);
 
+
 						extract($attachment_datas);
 
 						if (isset($permalink))
@@ -234,7 +233,7 @@ function galerie_perso($args = array("post_id", "nbre_img", "taille_imagette", "
 						 						"href" =>$href,
 						 						"height" => $height,
 						 						"width" => $width,
-						 						"alt_text" =>"",
+						 						"alt_text" =>$alt_text,
 						 						"pop_up" => $pop_up,
 						 						"taille_imagette" => $taille_imagette,
 						 						);
@@ -282,20 +281,97 @@ function html( $args = array("scr", "href", "height", "width", "alt_text", "pop_
 
 		}			// end swtch
 
-	?>
-		<a class = "<?php echo $pop_up ?>  thumbnail <?php echo $classe_taille_imagette ?>"  href="<?php echo $href ?>" rel =  "<?php echo $pop_up ?>"    >
 
+	if ( !is_admin())
+	{
+		?>
+			<a class = "<?php echo $pop_up ?>  thumbnail <?php echo $classe_taille_imagette ?>"  href="<?php echo $href ?>" rel =  "<?php echo $pop_up ?>"    >
+
+				<img class="galerie" src='<?php echo $scr ;?>' alt=" <?php echo $alt_text  ?>"  height="<?php echo $height; ?>" width="<?php echo $width ; ?>"  >
+
+			</a>
+	<?php
+	}
+	else
+		{
+			?>
 			<img class="galerie" src='<?php echo $scr ;?>' alt=" <?php echo $alt_text  ?>"  height="<?php echo $height; ?>" width="<?php echo $width ; ?>"  >
+			<?php
+		}
 
-		</a>
-<?php
+
+} // fin de fonction
+
+
+
+
+
+function homepage($args = array("post_id", "nbre_img", "taille_imagette", "pop_up" ))
+{
+
+extract($args);
+
+if ( !isset($nbre_img) ) { $nbre_img = 0; };
+if ( !isset($taille_imagette) ) { $taille_imagette = '150px'; };
+
+$args = array (
+					 'post_status' => 'any',
+					 'post_type' => 'attachment' ,
+	 				'post_mime_type' => 'image/jpeg',
+					);
+
+$query = query_posts( $args );
+
+$nbre_attch = count($query);
+
+
+$randoms = nbres_aleatoires($nbre_attch, $nbre_img);
+
+$attachment_ids = array();
+
+foreach ( $randoms as $position )
+		{
+			$attachment_id= $query[$position] -> ID;		// la position de l' ID dans la liste des attachments du post
+			array_push($attachment_ids, $attachment_id);
+		}
+
+if ($attachments_ids)
+	{
+
+		foreach ($attachments_ids as $attachment_id)
+			{
+
+				$attachment_datas = attachment_by_id($attachment_id, $taille_imagette);
+
+
+				extract($attachment_datas);
+
+				if (isset($permalink))
+					{
+						$href = $permalink;
+					}
+
+				 $args = array(
+				 						"scr" => $scr,
+				 						"href" =>$href,
+				 						"height" => $height,
+				 						"width" => $width,
+				 						"alt_text" =>$alt_text,
+				 						"pop_up" => $pop_up,
+				 						"taille_imagette" => $taille_imagette,
+				 						);
+
+
+
+			html( $args );
+
+			}   // fin foreach attachments_ids
+	}	//fin if ($attachments_ids)
+
+
 
 
 }
-
-
-
-
 
 
 
