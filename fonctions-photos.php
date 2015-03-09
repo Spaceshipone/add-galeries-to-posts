@@ -1,4 +1,10 @@
 <?php
+
+
+
+
+
+
 function search_post_attachments($post_id)
 	{
 		$args = array(									//recuperation des fichiers attaches
