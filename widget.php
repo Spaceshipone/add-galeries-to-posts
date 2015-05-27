@@ -122,7 +122,4 @@ add_action( 'widgets_init', '_OL_Galerie_register_foo_widget' );
 
 
 
-
-
-
 ?>

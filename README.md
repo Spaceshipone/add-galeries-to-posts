@@ -133,9 +133,7 @@ Ajout et suppression d' une métabox dans l' admin
  
  
  
- Version 1.3.0
  
- ajout d' une fonctionnalité de tri sur les noms des photos pour une meilleure organisation des galeries
  
  
  
