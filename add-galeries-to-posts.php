@@ -35,7 +35,7 @@ defined('ABSPATH') or die("No script kiddies please!");
 
 include ("fonctions-photos.php");
 include ("photos-metabox.php");
-
+include("widget.php");
 
 
 
