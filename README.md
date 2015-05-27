@@ -48,7 +48,7 @@ $args = array(
 
  "taille_imagette": non obligatoire, par défaut "150px"
  
- "pop_up";  introduit une classe dans l' html, celle donnée dans le plugin responsive lightbox comme déclencheur de l' évènement
+ "pop_up";  introduit une classe dans l' html, celle donnée dans le plugin responsive lightbox comme déclencheur de l' évènement.
  
  
  
@@ -125,7 +125,10 @@ Ajout et suppression d' une métabox dans l' admin
  
  
  
- 
+  Version 1.2.0
+  
+  
+  ajout d' un widget
  
  
  

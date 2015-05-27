@@ -202,6 +202,7 @@ function galerie_perso($args = array("post_id", "nbre_img", "taille_imagette", "
 
 		if ( !isset($nbre_img) ) { $nbre_img = 0; };
 		if ( !isset($taille_imagette) ) { $taille_imagette = '150px'; };
+		if ( !isset($pop_up) ) { $pop_up = ""; };
 
 
 		$args = array (
