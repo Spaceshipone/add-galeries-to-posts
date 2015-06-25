@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: add-galeries-to-posts
+Plugin Name: add-galeries-to-posts  1111111
 Plugin URI: http://ombres-et-lumieres.eu
 Description: crée des galeries en utilisant les attacments des posts et pages
 Version: 1.0.0

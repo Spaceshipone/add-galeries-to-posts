@@ -49,21 +49,6 @@ function attachments_aleatoire($attachments_ids, $nbre_img)
 
 
 
-
-function attachments_all($attachments_ids)
-	{
-		if ( $attachments_ids )
-			{
-				//  on réorganise par nom de fichier ou date de prise de vue
-			}
-
-		return $attachments_ids;
-	}
-
-
-
-
-
 function nbres_aleatoires($nbre_attachments, $max_photos)
 
 	{
@@ -98,29 +83,44 @@ function nbres_aleatoires($nbre_attachments, $max_photos)
 	}
 
 
-function organize_attachments($args = array("post_id", "nbre_img" => Null) )
+function organize_attachments($args = array("post_id", "nbre_img") )
 	{
 
 		extract($args);
 
-
 		$attachments_ids = search_post_attachments($post_id);
 
-
-		if ($nbre_img)
+		if ($attachments_ids)
 			{
-				 $attachments_ids = attachments_aleatoire($attachments_ids, $nbre_img)	;
-			}
-/*
+				$nbre_ids  = count($attachments_ids);
+
+				if (( $nbre_img < $nbre_ids ) and ( 0 != $nbre_img ))
+					{
+						$attachments_ids = attachments_aleatoire($attachments_ids, $nbre_img);
+					}
+
+
+				foreach ( $attachments_ids as $attachment_id )
+					{
+
+						$metas = wp_get_attachment_metadata( $attachment_id );
+
+						$name = explode( ".", $metas["file"])[0];
+
+						$attachments_list [ $attachment_id ]  =   $name  ;
+
+					}
+				asort($attachments_list);
+			}  // fin if attachments
 			else
 				{
-					attachments_all($attachments_ids);
+					$attachments_list = null;
 				}
-*/
 
-		return $attachments_ids;
+		return $attachments_list;
 
 	} // fin de fonction
+
 
 
 
@@ -213,10 +213,12 @@ function galerie_perso($args = array("post_id", "nbre_img", "taille_imagette", "
 
 		$attachments_ids = organize_attachments( $args );
 
+		$nbre_attachments = count($attachments_ids);
+
 		if ($attachments_ids)
 			{
 
-				foreach ($attachments_ids as $attachment_id)
+				foreach ($attachments_ids as $attachment_id => $name)
 					{
 
 						$attachment_datas = attachment_by_id($attachment_id, $taille_imagette);
