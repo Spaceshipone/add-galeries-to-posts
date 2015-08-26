@@ -57,6 +57,7 @@ function images_setup()
   {
 	if ( function_exists( 'add_image_size' ) )
 		{
+			add_image_size( '375px', 375, 375 );
 			add_image_size( '300px', 300, 300 );
 			add_image_size( '250px', 250, 250 );
 			add_image_size( '200px', 200, 200 );

@@ -105,9 +105,11 @@ function organize_attachments($args = array("post_id", "nbre_img") )
 
 						$metas = wp_get_attachment_metadata( $attachment_id );
 
-						$name = explode( ".", $metas["file"])[0];
+						$full_name = $metas["file"];
 
-						$attachments_list [ $attachment_id ]  =   $name  ;
+						$file_name = explode( ".", $full_name)[0];
+
+						$attachments_list [ $attachment_id ]  =   $file_name  ;
 
 					}
 				asort($attachments_list);
@@ -157,6 +159,10 @@ function attachment_by_id($attachment_id, $taille_imagette)
 
 							case "200px":
 								$taille_imagette_plus_un  = "300px";
+								break;
+
+							case "250px":
+								$taille_imagette_plus_un  = "375px";
 								break;
 
 						}			// end swtch
@@ -217,7 +223,7 @@ function galerie_perso($args = array("post_id", "nbre_img", "taille_imagette", "
 
 		if ($attachments_ids)
 			{
-
+				echo "<ul>";
 				foreach ($attachments_ids as $attachment_id => $name)
 					{
 
@@ -246,9 +252,10 @@ function galerie_perso($args = array("post_id", "nbre_img", "taille_imagette", "
 					html( $args );
 
 					}   // fin foreach attachments_ids
+				echo "</ul>";
 
 			}  				//fin de if attachments_ids
-
+			return array($height, $width);
 
 	}  // fin de fonction
 
@@ -278,8 +285,16 @@ function html( $args = array("scr", "href", "height", "width", "alt_text", "pop_
 				$classe_taille_imagette = "px225";
 				break;
 
+			case "250px":
+				$classe_taille_imagette = "px250";
+				break;
+
 			case "300px":
 				$classe_taille_imagette = "px300";
+				break;
+
+			case "375px":
+				$classe_taille_imagette = "px375";
 				break;
 
 		}			// end swtch
@@ -288,11 +303,11 @@ function html( $args = array("scr", "href", "height", "width", "alt_text", "pop_
 	if ( !is_admin())
 	{
 		?>
-			<a class = "<?php echo $pop_up ?>  thumbnail <?php echo $classe_taille_imagette ?>"  href="<?php echo $href ?>" rel =  "<?php echo $pop_up ?>"    >
+			<li class="galerie <?php echo $classe_taille_imagette ?>"><a class = "<?php echo $pop_up ?> "  href="<?php echo $href ?>" rel =  "<?php echo $pop_up ?>"    >
 
-				<img class="galerie" src='<?php echo $scr ;?>' alt=" <?php echo $alt_text  ?>"  height="<?php echo $height; ?>" width="<?php echo $width ; ?>"  >
+				<img class="thumbnail <?php //echo $classe_taille_imagette ?>" src='<?php echo $scr ;?>' alt=" <?php echo $alt_text  ?>"  height="<?php echo $height; ?>" width="<?php echo $width ; ?>"  >
 
-			</a>
+			</a></li>
 	<?php
 	}
 	else
@@ -309,72 +324,32 @@ function html( $args = array("scr", "href", "height", "width", "alt_text", "pop_
 
 
 
-function homepage($args = array("post_id", "nbre_img", "taille_imagette", "pop_up" ))
-{
-
-extract($args);
-
-if ( !isset($nbre_img) ) { $nbre_img = 0; };
-if ( !isset($taille_imagette) ) { $taille_imagette = '150px'; };
-
-$args = array (
-					 'post_status' => 'any',
-					 'post_type' => 'attachment' ,
-	 				'post_mime_type' => 'image/jpeg',
-					);
-
-$query = query_posts( $args );
-
-$nbre_attch = count($query);
-
-
-$randoms = nbres_aleatoires($nbre_attch, $nbre_img);
-
-$attachment_ids = array();
-
-foreach ( $randoms as $position )
-		{
-			$attachment_id= $query[$position] -> ID;		// la position de l' ID dans la liste des attachments du post
-			array_push($attachment_ids, $attachment_id);
-		}
-
-if ($attachments_ids)
-	{
-
-		foreach ($attachments_ids as $attachment_id)
-			{
-
-				$attachment_datas = attachment_by_id($attachment_id, $taille_imagette);
-
-
-				extract($attachment_datas);
-
-				if (isset($permalink))
-					{
-						$href = $permalink;
-					}
-
-				 $args = array(
-				 						"scr" => $scr,
-				 						"href" =>$href,
-				 						"height" => $height,
-				 						"width" => $width,
-				 						"alt_text" =>$alt_text,
-				 						"pop_up" => $pop_up,
-				 						"taille_imagette" => $taille_imagette,
-				 						);
-
-
-
-			html( $args );
-
-			}   // fin foreach attachments_ids
-	}	//fin if ($attachments_ids)
 
 
 
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
