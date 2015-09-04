@@ -143,3 +143,22 @@ Ajout et suppression d' une métabox dans l' admin
  la galerie est enfin affichée dans l' ordre des photos. Celui-ci est basé sur les noms des photos qui doivent être de type "nomjourmoisannée-numdesérie
  
  
+ 
+ Version 2.0.0
+ 
+ non finalisée
+ 
+ j' ai ajouté des fonctions pour rendre un html compatible avec masonry (en cours de travail)
+ 
+ j' ai ajouté une metabox dont le but est de sélectionner des id de medias afin de créer une galerie sans avoir besoin d' attacher les fichiers, ce qui m' économiserait pas mal de place au niveau volume des médias.
+ La première partie fonctionne: je récupère des id sous forme "string" dans une balise input. Mais je n' arrive pas à l' enregistrer comme meta du post.
+ Je suis parti du tutoriel de Gafkart: http://www.grafikart.fr/tutoriels/wordpress/wp-media-uploader-403
+ Et je viens de découvrir un tutoriel semblable mais plus complexe chez Willy Bahuaud: http://wabeo.fr/meta-box-pdf-article/. Ses codes ont été rajoutés dans deux pages non liées au plugin, à titre d' inspiration.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

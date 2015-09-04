@@ -143,8 +143,11 @@ function attachment_by_id($attachment_id, $taille_imagette)
 
 			$width = $datas_imagette[1];
 
+
+
 			if ( ($height < $width) )    // la mesure de base est la hauteur de la photo
-			/* ici on teste le rapport largeur/hauteur et on décide de de la taille d' imagette à utiliser */
+			//ici on teste le rapport largeur/hauteur et on décide de de la taille d' imagette à utiliser
+
 				{
 					switch ($taille_imagette)
 						{
@@ -169,7 +172,10 @@ function attachment_by_id($attachment_id, $taille_imagette)
 
 						$datas_imagette = wp_get_attachment_image_src( $attachment_id, $taille_imagette_plus_un );
 
+
 				}   // fin de if    ($height < $width)
+
+
 		} // fin de if $datas_imagettes
 
 
@@ -255,7 +261,7 @@ function galerie_perso($args = array("post_id", "nbre_img", "taille_imagette", "
 				echo "</ul>";
 
 			}  				//fin de if attachments_ids
-			return array($height, $width);
+		//	return array($height, $width);
 
 	}  // fin de fonction
 
@@ -265,6 +271,7 @@ function galerie_perso($args = array("post_id", "nbre_img", "taille_imagette", "
 function html( $args = array("scr", "href", "height", "width", "alt_text", "pop_up", "taille_imagette"))
 {
 	extract($args);
+
 
 	switch ($taille_imagette)
 		{
@@ -300,12 +307,13 @@ function html( $args = array("scr", "href", "height", "width", "alt_text", "pop_
 		}			// end swtch
 
 
+
 	if ( !is_admin())
 	{
 		?>
-			<li class="galerie <?php echo $classe_taille_imagette ?>"><a class = "<?php echo $pop_up ?> "  href="<?php echo $href ?>" rel =  "<?php echo $pop_up ?>"    >
+			<li class="galerie post <?php echo $classe_taille_imagette ?>"><a class = "<?php echo $pop_up ?> "  href="<?php echo $href ?>" rel =  "<?php echo $pop_up ?>"    >
 
-				<img class="thumbnail <?php //echo $classe_taille_imagette ?>" src='<?php echo $scr ;?>' alt=" <?php echo $alt_text  ?>"  height="<?php echo $height; ?>" width="<?php echo $width ; ?>"  >
+				<img class="thumbnail" src='<?php echo $scr ;?>' alt=" <?php echo $alt_text  ?>"  height="<?php echo $height; ?>" width="<?php echo $width ; ?>"  >
 
 			</a></li>
 	<?php
@@ -324,6 +332,40 @@ function html( $args = array("scr", "href", "height", "width", "alt_text", "pop_
 
 
 
+function attachment_by_id_masonry($attachment_id, $taille_imagette)
+{
+	$datas_image = wp_get_attachment_image_src( $attachment_id, 'full' );
+
+	$href  =  $datas_image[0];
+
+	$datas_imagette = wp_get_attachment_image_src( $attachment_id, $taille_imagette);
+
+	if($datas_imagette )
+		{
+
+			$height = $datas_imagette[2];
+
+			$width = $datas_imagette[1];
+
+			$scr = $datas_imagette[0];
+
+		} // fin de if $datas_imagettes
+
+		$href = $datas_image[0];
+
+		$alt_text = get_post($attachment_id ) -> post_content;
+
+		$attachment_datas = array(
+													"height" => $height,
+													"scr"      => $scr,
+													"width"  => $width,
+													"href"    => $href,
+													"alt_text" => $alt_text,
+													);
+
+
+	return $attachment_datas;
+}
 
 
 
@@ -338,8 +380,18 @@ function html( $args = array("scr", "href", "height", "width", "alt_text", "pop_
 
 
 
+function html_masonry( $args = array("scr", "href", "height", "width", "alt_text", "pop_up", "taille_imagette"))
+{
+	extract($args);
 
-
+	?>
+		<li class="galerie grid-item">
+			<a   href="<?php echo $href ?>"   >
+				<img class="thumbnail" src='<?php echo $scr ;?>' alt=" <?php echo $alt_text  ?>"  height="<?php echo $height; ?>" width="<?php echo $width ; ?>"  >
+			</a>
+		</li>
+	<?php
+}
 
 
 

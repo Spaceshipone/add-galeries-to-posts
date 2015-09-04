@@ -35,22 +35,8 @@ defined('ABSPATH') or die("No script kiddies please!");
 
 include ("fonctions-photos.php");
 include ("photos-metabox.php");
-include("widget.php");
-
-
-
-function register_my_galerie_menu_page()
-	{
-	    add_menu_page( 'galerie title', 'galerie', 'manage_options','hello', 'my_galerie_menu_page',  plugin_dir_url( __FILE__ )."images/camera.jpg", 101 );
-	}
-
-	add_action( 'admin_menu', 'register_my_galerie_menu_page' );
-
-
-function my_galerie_menu_page()
-	{
-	    echo "Le plugin galerie est encore activé!!!!!!!!";
-	}
+//include("widget.php");
+include ("ol_galerie_menu_page.php");
 
 
 function images_setup()
